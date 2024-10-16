@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест - Первый учитель</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle at top left, #e0eafc, #cfdef3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .quiz-container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer:hover:not(.disabled) {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .answer:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .correct {
+            background: #2ecc71 !important;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .incorrect {
+            background: #e74c3c !important;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f0f8ff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .next-question {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .next-question:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 20px;
+            }
+
+            .question {
+                font-size: 16px;
+            }
+
+            .answer {
+                font-size: 14px;
+            }
+
+            .next-question {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="title">Тест по произведению "Первый учитель"</div>
+        <div class="question-container">
+            <div class="question">Какой основной конфликт присутствует в произведении "Первый учитель"?</div>
+                <button class="answer"> Конфликт между старым и новым поколением</button>
+                <button class="answer"> Конфликт между городом и деревней</button>
+                <button class="answer" data-correct="true"> Конфликт между традиционными и современными взглядами</button>
+                <button class="answer"> Конфликт между образованием и невежством</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Как звали главного героя произведения "Первый учитель"?</div>
+                <button class="answer"> Султан</button>
+                <button class="answer"> Козекей</button>
+                <button class="answer"> Токмок</button>
+                <button class="answer" data-correct="true"> Дюйшен</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Какой предмет преподавал главный герой в школе?</div>
+                <button class="answer"> Математику</button>
+                <button class="answer"> Историю</button>
+                <button class="answer" data-correct="true"> Русский язык</button>
+                <button class="answer"> Природоведение</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Какой важный социальный аспект обсуждается в произведении?</div>
+                <button class="answer"> Проблемы миграции</button>
+                <button class="answer"> Женские права</button>
+                <button class="answer" data-correct="true"> Роль образования в жизни человека</button>
+                <button class="answer"> Религиозные конфликты</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Какой момент в произведении является кульминацией?</div>
+                <button class="answer"> Постепенное привыкание учеников к новому учителю</button>
+                <button class="answer"> Уход главного героя из школы</button>
+                <button class="answer" data-correct="true"> Непонимание и конфликты между учителем и местными жителями</button>
+                <button class="answer"> Вступление главного героя в бой с врагами</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Какой характер имеет главный герой произведения?</div>
+                <button class="answer" data-correct="true"> Сдержанный и решительный</button>
+                <button class="answer"> Тревожный и беспокойный</button>
+                <button class="answer"> Упрямый и самоуверенный</button>
+                <button class="answer"> Легкомысленный и небрежный</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Какой жизненный опыт главного героя повлиял на его отношение к работе?</div>
+                <button class="answer"> Опыт жизни в городе</button>
+                <button class="answer"> Опыт работы в других странах</button>
+                <button class="answer" data-correct="true"> Опыт работы в сельской школе</button>
+                <button class="answer"> Опыт военной службы</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Какие чувства вызывает у главного героя его работа в школе?</div>
+                <button class="answer"> Полное удовлетворение и радость</button>
+                <button class="answer" data-correct="true"> Тоска и разочарование</button>
+                <button class="answer"> Нервозность и беспокойство</button>
+                <button class="answer"> Гордость и чувство выполненного долга</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Какую роль играют ученики в жизни главного героя?</div>
+                <button class="answer"> Они являются источником постоянного стресса</button>
+                <button class="answer" data-correct="true"> Они вдохновляют и мотивируют его</button>
+                <button class="answer"> Они представляют собой трудности и проблемы</button>
+                <button class="answer"> Они вызывают у него равнодушие</button>
+            </div>
+            <div class="question-container">
+                <div class="question">Как меняется отношение главного героя к своему делу по мере развития сюжета?</div>
+                <button class="answer" data-correct="true"> Оно становится более оптимистичным и полным надежды</button>
+                <button class="answer"> Оно становится более разочарованным и пессимистичным</button>
+                <button class="answer"> Оно остаётся неизменным и стабильным</button>
+                <button class="answer"> Оно изменяется на более нейтральное и равнодушное</button>
+            </div>
+        <button class="next-question">Следующий вопрос</button>
+        <div class="result"></div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = document.querySelectorAll('.question-container');
+            const totalQuestions = questions.length;
+            let currentQuestionIndex = 0;
+            let correctAnswers = 0;
+
+            function showQuestion(index) {
+                questions.forEach((question, i) => {
+                    question.style.display = i === index ? 'block' : 'none';
+                });
+                document.querySelector('.next-question').style.display = 'none';
+            }
+
+            function handleAnswerClick(event) {
+                const answerButtons = event.currentTarget.parentNode.querySelectorAll('.answer');
+                const isCorrect = event.currentTarget.dataset.correct === 'true';
+
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button === event.currentTarget) {
+                        button.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    } else if (button.dataset.correct === 'true') {
+                        button.classList.add('correct');
+                    } else {
+                        button.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    correctAnswers++;
+                }
+
+                const nextButton = document.querySelector('.next-question');
+                if (currentQuestionIndex < totalQuestions - 1) {
+                    nextButton.style.display = 'block';
+                } else {
+                    nextButton.textContent = 'Завершить тест';
+                    nextButton.style.display = 'block';
+                }
+            }
+
+            function handleNextButtonClick() {
+                currentQuestionIndex++;
+                if (currentQuestionIndex >= totalQuestions) {
+                    document.querySelector('.result').textContent = `Тест завершен! Вы ответили правильно на ${correctAnswers} из ${totalQuestions} вопросов.`;
+                    document.querySelector('.result').style.fontSize = '24px';
+                    document.querySelector('.result').style.fontWeight = 'bold';
+                    document.querySelector('.result').style.color = '#3498db';
+                    document.querySelector('.next-question').style.display = 'none';
+                } else {
+                    showQuestion(currentQuestionIndex);
+                }
+            }
+
+            showQuestion(currentQuestionIndex);
+
+            document.querySelectorAll('.answer').forEach(button => {
+                button.addEventListener('click', handleAnswerClick);
+            });
+
+            document.querySelector('.next-question').addEventListener('click', handleNextButtonClick);
+        });
+    </script>
+</body>
+</html>
