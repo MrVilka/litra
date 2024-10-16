@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест - Уроки Французского</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle at top left, #e0eafc, #cfdef3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .quiz-container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer:hover:not(.disabled) {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .answer:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .correct {
+            background: #2ecc71 !important;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .incorrect {
+            background: #e74c3c !important;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f0f8ff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .next-question {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .next-question:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 20px;
+            }
+
+            .question {
+                font-size: 16px;
+            }
+
+            .answer {
+                font-size: 14px;
+            }
+
+            .next-question {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="title">Тест по общим знаниям</div>
+        <div class="question-container">
+            <div class="question">В каком году герой текста пошел в пятый класс?</div>
+            <button class="answer">1945</button>
+            <button class="answer">1947</button>
+            <button class="answer" data-correct="true">1948</button>
+            <button class="answer">1949</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Какую роль играли облигации для героев?</div>
+            <button class="answer">Средство обмена</button>
+            <button class="answer">Источник питания</button>
+            <button class="answer" data-correct="true">Способ заработка</button>
+            <button class="answer">Увлечение</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Почему мать решилась отправить героя в район?</div>
+            <button class="answer" data-correct="true">Отчаяние из-за плохих условий жизни в деревне</button>
+            <button class="answer">Надежда на улучшение материального положения</button>
+            <button class="answer">Желание дать ему лучшее образование</button>
+            <button class="answer">Потребность в дополнительной помощи на хозяйстве</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Что вызвало тоску и потерю аппетита у героя?</div>
+            <button class="answer">Голод</button>
+            <button class="answer" data-correct="true">Тоска по дому и деревне</button>
+            <button class="answer">Химия в школе</button>
+            <button class="answer">Проблемы с одноклассниками</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Какой предмет был сложным для героя в школе?</div>
+            <button class="answer">Математика</button>
+            <button class="answer">История</button>
+            <button class="answer">Русский язык</button>
+            <button class="answer" data-correct="true">Французский язык</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Какое чувство герой испытывал, когда мать уезжала?</div>
+            <button class="answer">Радость</button>
+            <button class="answer" data-correct="true">Печаль и отчаяние</button>
+            <button class="answer">Ревность</button>
+            <button class="answer">Удовольствие</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Что происходило с продуктами, которые мать посылала греою?</div>
+            <button class="answer" data-correct="true">Их крали</button>
+            <button class="answer">Они быстро съедались</button>
+            <button class="answer">Они оставались в целости</button>
+            <button class="answer">Они портились</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Как герой относился к игре в "чику" и почему?</div>
+            <button class="answer">Он был равнодушен</button>
+            <button class="answer">Он был увлечен игрой</button>
+            <button class="answer">Он не играл из-за нехватки денег</button>
+            <button class="answer" data-correct="true">Он играл, потому что хотел заработать на еду</button>
+        </div>
+
+        <div class="question-container">
+            <div class="question">Что случилось с героем, когда он несогласился с Вадиком по поводу перевернутой монеты?</div>
+            <button class="answer">Он был проигнорирован</button>
+            <button class="answer" data-correct="true">Он подвергся физическому насилию</button>
+            <button class="answer">Он был обманут</button>
+            <button class="answer">Он выиграл деньги</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Как Вадик реагировал на постоянные выигрыши героя в игре?</div>
+            <button class="answer">Он радовался за героя</button>
+            <button class="answer">Он игнорировал его</button>
+            <button class="answer" data-correct="true">Он стал подбирать шайбу только после всех</button>
+            <button class="answer">Он пердложил герою помощь</button>
+        </div>
+        <button class="next-question">Следующий вопрос</button>
+        <div class="result"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = document.querySelectorAll('.question-container');
+            const totalQuestions = questions.length;
+            let currentQuestionIndex = 0;
+            let correctAnswers = 0;
+
+            function showQuestion(index) {
+                questions.forEach((question, i) => {
+                    question.style.display = i === index ? 'block' : 'none';
+                });
+                document.querySelector('.next-question').style.display = 'none';
+            }
+
+            function handleAnswerClick(event) {
+                const answerButtons = event.currentTarget.parentNode.querySelectorAll('.answer');
+                const isCorrect = event.currentTarget.dataset.correct === 'true';
+
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button === event.currentTarget) {
+                        button.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    } else if (button.dataset.correct === 'true') {
+                        button.classList.add('correct');
+                    } else {
+                        button.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    correctAnswers++;
+                }
+
+                const nextButton = document.querySelector('.next-question');
+                if (currentQuestionIndex < totalQuestions - 1) {
+                    nextButton.style.display = 'block';
+                } else {
+                    nextButton.textContent = 'Завершить тест';
+                    nextButton.style.display = 'block';
+                }
+            }
+
+            function handleNextButtonClick() {
+                currentQuestionIndex++;
+                if (currentQuestionIndex >= totalQuestions) {
+                    document.querySelector('.result').textContent = `Тест завершен! Вы ответили правильно на ${correctAnswers} из ${totalQuestions} вопросов.`;
+                    document.querySelector('.result').style.fontSize = '24px';
+                    document.querySelector('.result').style.fontWeight = 'bold';
+                    document.querySelector('.result').style.color = '#3498db';
+                    document.querySelector('.next-question').style.display = 'none';
+                } else {
+                    showQuestion(currentQuestionIndex);
+                }
+            }
+
+            showQuestion(currentQuestionIndex);
+
+            document.querySelectorAll('.answer').forEach(button => {
+                button.addEventListener('click', handleAnswerClick);
+            });
+
+            document.querySelector('.next-question').addEventListener('click', handleNextButtonClick);
+        });
+    </script>
+</body>
+</html>
