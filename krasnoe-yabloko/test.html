@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест - Уроки Французского</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle at top left, #e0eafc, #cfdef3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .quiz-container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer:hover:not(.disabled) {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .answer:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .correct {
+            background: #2ecc71 !important;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .incorrect {
+            background: #e74c3c !important;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f0f8ff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .next-question {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .next-question:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 20px;
+            }
+
+            .question {
+                font-size: 16px;
+            }
+
+            .answer {
+                font-size: 14px;
+            }
+
+            .next-question {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="title">Тест по общим знаниям</div>
+        <div class="question-container">
+            <div class="question">Что символизирует красное яблоко в рассказе?</div>
+            <button class="answer">Надежду на лучшее будущее</button>
+            <button class="answer" data-correct="true">Утрату молодости и любви</button>
+            <button class="answer">Богатство и достаток</button>
+            <button class="answer">Знак здоровья и силы</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Кем по профессии был главный герой рассказа?</div>
+            <button class="answer">Учителем</button>
+            <button class="answer">Врачом</button>
+            <button class="answer">Художником</button>
+            <button class="answer" data-correct="true">Инженером</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Какую эмоцию чаще всего испытывает главный герой по отношению к своей жене?</div>
+            <button class="answer">Радость</button>
+            <button class="answer" data-correct="true">Вину</button>
+            <button class="answer">Гордость</button>
+            <button class="answer">Зависть</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Почему главный герой вспомнил о другой женщине?</div>
+            <button class="answer">Он случайно встретил ее на улице</button>
+            <button class="answer">Она прислала ему письмо</button>
+            <button class="answer" data-correct="true">Она стала символом утраченной мечты</button>
+            <button class="answer">Он увидел ее фотографию</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Какая главная тема поднимается в рассказе?</div>
+            <button class="answer">Любовь и верность</button>
+            <button class="answer">Жадность и власть</button>
+            <button class="answer" data-correct="true">Человеческие слабости и сомнения</button>
+            <button class="answer">Борьба за выживание</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Какую роль играет яблоко в отношениях главного героя с его женой?</div>
+            <button class="answer">Яблоко символизирует их взаимную любовь</button>
+            <button class="answer">Яблоко является знаком разрыва их отношений</button>
+            <button class="answer" data-correct="true">Яблоко становится символом недосказанности</button>
+            <button class="answer">Яблоко символизирует примирение</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Что больше всего мучает главного героя?</div>
+            <button class="answer">Неудовлетворенность жизнью</button>
+            <button class="answer" data-correct="true">Чувство вины перед женой</button>
+            <button class="answer">Утрата работы</button>
+            <button class="answer">Потеря близкого друга</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Как заканчиватся рассказ?</div>
+            <button class="answer">Герой решает уйти из семьи</button>
+            <button class="answer">Герой находит внутренний покой</button>
+            <button class="answer">Герой осознает свою любовь к жене</button>
+            <button class="answer" data-correct="true">Герой остается в раздумьях о своем прошлом</button>
+        </div>
+
+        <div class="question-container">
+            <div class="question">Какое настроение преобладает в рассказе?</div>
+            <button class="answer">Оптимистичное</button>
+            <button class="answer">Тревожное</button>
+            <button class="answer" data-correct="true">Ностальгическое</button>
+            <button class="answer">Печальное</button>
+        </div>
+        <div class="question-container">
+            <div class="question">Что хочет сказать Айтматов через рассказ «Красное яблоко»?</div>
+            <button class="answer">Нужно всегда следовать за своими мечтами</button>
+            <button class="answer">В жизни важно оставаться верным себе</button>
+            <button class="answer" data-correct="true">Человеческие слабости неизбежны и требуют осмысления</button>
+            <button class="answer">Семья — это единственная ценность в жизни</button>
+        </div>
+        <button class="next-question">Следующий вопрос</button>
+        <div class="result"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = document.querySelectorAll('.question-container');
+            const totalQuestions = questions.length;
+            let currentQuestionIndex = 0;
+            let correctAnswers = 0;
+
+            function showQuestion(index) {
+                questions.forEach((question, i) => {
+                    question.style.display = i === index ? 'block' : 'none';
+                });
+                document.querySelector('.next-question').style.display = 'none';
+            }
+
+            function handleAnswerClick(event) {
+                const answerButtons = event.currentTarget.parentNode.querySelectorAll('.answer');
+                const isCorrect = event.currentTarget.dataset.correct === 'true';
+
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button === event.currentTarget) {
+                        button.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    } else if (button.dataset.correct === 'true') {
+                        button.classList.add('correct');
+                    } else {
+                        button.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    correctAnswers++;
+                }
+
+                const nextButton = document.querySelector('.next-question');
+                if (currentQuestionIndex < totalQuestions - 1) {
+                    nextButton.style.display = 'block';
+                } else {
+                    nextButton.textContent = 'Завершить тест';
+                    nextButton.style.display = 'block';
+                }
+            }
+
+            function handleNextButtonClick() {
+                currentQuestionIndex++;
+                if (currentQuestionIndex >= totalQuestions) {
+                    document.querySelector('.result').textContent = `Тест завершен! Вы ответили правильно на ${correctAnswers} из ${totalQuestions} вопросов.`;
+                    document.querySelector('.result').style.fontSize = '24px';
+                    document.querySelector('.result').style.fontWeight = 'bold';
+                    document.querySelector('.result').style.color = '#3498db';
+                    document.querySelector('.next-question').style.display = 'none';
+                } else {
+                    showQuestion(currentQuestionIndex);
+                }
+            }
+
+            showQuestion(currentQuestionIndex);
+
+            document.querySelectorAll('.answer').forEach(button => {
+                button.addEventListener('click', handleAnswerClick);
+            });
+
+            document.querySelector('.next-question').addEventListener('click', handleNextButtonClick);
+        });
+    </script>
+</body>
+</html>
